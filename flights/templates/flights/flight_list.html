@@ -1,0 +1,77 @@
+{% extends 'flights/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Flights</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <h1>Search Flights</h1>
+
+    <form method="get">
+        {{ form.departure_city.label_tag }} {{ form.departure_city }}
+        {{ form.arrival_city.label_tag }} {{ form.arrival_city }}
+        <input type="text" id="flight-date" name="date" placeholder="Select Date" readonly>
+        <button type="submit">Search</button>
+    </form>
+
+{% if flights %}
+    <h2>Available Flights</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>From → To</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        {% for flight in flights %}
+        <tr>
+            <td>{{ flight.id }}</td>
+            <td>{{ flight.departure_city }} → {{ flight.arrival_city }}</td>
+            <td>{{ flight.date }}</td>
+            <td>${{ flight.price }}</td>
+            <td>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'book_step1' flight.id %}">Book</a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'flight_list' %}">Login to Book</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+
+{% if user.is_staff %}
+    <a href="{% url 'create_flight' %}">Create New Flight</a>
+{% endif %}
+
+
+{% if user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+{% endif %}
+
+
+{% if not user.is_authenticated %}
+    <a href="{% url 'login' %}">Login</a> |
+    <a href="{% url 'register' %}">Register</a>
+{% endif %}
+
+<script>
+    window.availableDates = {{ available_dates|safe }};
+    window.routes = {{ form.routes|safe }};
+</script>
+<script src="{% static 'flights/flight_list.js' %}"></script>
+</body>
+</html>
+
+{% endblock %}

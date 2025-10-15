@@ -1,0 +1,13 @@
+{% extends 'flights/base.html' %}
+{% block content %}
+
+<h1>Step 4: Payment Details</h1>
+<p>Flight: {{ flight.departure_city }} → {{ flight.arrival_city }} | {{ flight.date }}</p>
+<p>Total Price: €{{ total_price }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Pay & Confirm</button>
+</form>
+{% endblock %}
