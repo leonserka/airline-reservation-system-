@@ -1,8 +1,0 @@
-<h1>Book Flight: {{ flight.departure_city }} → {{ flight.arrival_city }} | {{ flight.date }}</h1>
-<p>Price: ${{ flight.price }}</p>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Book Ticket</button>
-</form>

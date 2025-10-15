@@ -1,7 +1,0 @@
-<h1>Create Flight</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create Flight</button>
-</form>
-<a href="{% url 'flight_list' %}">Back to Flight List</a>
