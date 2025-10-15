@@ -1,0 +1,57 @@
+.seat-map-container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  background-image: url("../flights/avion.png"); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+
+.seat {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seat.occupied {
+  background-color: red;
+  cursor: not-allowed;
+}
+
+.seat.canceled {
+  background-color: gray;  
+  cursor: pointer;
+}
+
+.left-side {
+  position: absolute;
+  left: 0;
+}
+
+.right-side {
+  position: absolute;
+  left: 55px;
+}
+
+.row {
+  position: relative;
+}
+
+.continue-btn {
+  margin-top: 20px;
+}
+
+.seat.selected {
+  background-color: gray !important;
+}

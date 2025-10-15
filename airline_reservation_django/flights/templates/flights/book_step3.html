@@ -1,0 +1,47 @@
+{% extends 'flights/base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <h1>Step 3: Select Your Seat</h1>
+  <p>Flight: {{ flight.departure_city }} → {{ flight.arrival_city }} | {{ flight.date }}</p>
+  <p>Selected Class: {{ request.session.seat_class }}</p>
+  <p>Total Price: {{ total_price }} €</p>
+
+  <form method="post" action="{% url 'book_step4' flight.id %}">
+    {% csrf_token %}
+    <div class="seat-selection">
+        <p id="selected-seat-text">Selected Seat: {{ request.session.selected_seat|default:"None" }}</p>   
+    </div>
+
+    <div class="seat-map-container">
+        {% for row in seat_positions %}
+            <div class="row">
+                <div class="left-side">
+                    {% for seat in row.left %}
+                        <div class="seat {% if seat.occupied %}occupied{% endif %}" id="seat-{{ seat.seat_id }}" style="top: {{ seat.top }}px; left: {{ seat.left }}px;" data-seat="{{ seat.seat_id }}">     
+                            {{ seat.seat_id }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="right-side">
+                    {% for seat in row.right %}
+                        <div class="seat {% if seat.occupied %}occupied{% endif %}" id="seat-{{ seat.seat_id }}" style="top: {{ seat.top }}px; left: {{ seat.left }}px;" data-seat="{{ seat.seat_id }}">
+                            {{ seat.seat_id }}                            
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <button type="submit" class="continue-btn" {% if not request.session.selected_seat %}disabled{% endif %}>Continue</button>
+  </form>
+  <link rel="stylesheet" href="{% static 'flights/flight_step3.css' %}">
+  <script src="{% static 'flights/flight_step3.js' %}"></script>
+
+
+{% endblock %}
+
+

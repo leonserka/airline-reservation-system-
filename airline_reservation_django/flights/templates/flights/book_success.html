@@ -1,0 +1,13 @@
+{% extends 'flights/base.html' %}
+{% block content %}
+<h1>Booking Successful!</h1>
+<p>Thank you.</p>
+
+<p><strong>Your flight:</strong> {{ ticket.flight.departure_city }} → {{ ticket.flight.arrival_city }} | {{ ticket.flight.date }}</p>
+<p><strong>Seat:</strong> {{ ticket.seat_number }} ({{ ticket.seat_class }})</p>
+<p><strong>Price:</strong> €{{ ticket.price_paid }}</p>
+<p><strong>Payment status:</strong> {{ payment_status }}</p>
+
+
+<a href="{% url 'home' %}" class="btn btn-primary">Return Home</a>
+{% endblock %}

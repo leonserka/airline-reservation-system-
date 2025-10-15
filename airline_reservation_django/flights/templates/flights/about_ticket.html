@@ -1,0 +1,21 @@
+{% extends 'flights/base.html' %}
+
+{% block content %}
+    <h1>About Your Ticket</h1>
+
+    <p><strong>Passenger Name:</strong> {{ ticket.passenger_name }} {{ ticket.passenger_surname }}</p>
+    <p><strong>Flight:</strong> {{ ticket.flight.departure_city }} → {{ ticket.flight.arrival_city }} | {{ ticket.flight.date }}</p>
+    <p><strong>Seat Class:</strong> {{ ticket.seat_class }}</p>
+    <p><strong>Seat Number:</strong> {{ ticket.seat_number }}</p>
+    <p><strong>Price Paid:</strong> €{{ ticket.price_paid }}</p>
+    <p><strong>Payment Method:</strong> {{ ticket.payment_method }}</p>
+    <p><strong>Payment Status:</strong> {{ ticket.payment_status }}</p>
+
+    {% if ticket.payment_status == "paid" and ticket.seat_class == "PLUS" %}
+        <a href="{% url 'cancel_booked_flight' ticket.id %}" class="btn btn-danger">Cancel Ticket</a>
+    {% else %}
+        <p>This ticket cannot be canceled.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-primary">Return Home</a>
+{% endblock %}
